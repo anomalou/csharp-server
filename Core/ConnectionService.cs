@@ -34,7 +34,7 @@ namespace Server.Core {
         }
 
         public void CheckConnection (Connection connection) {
-
+            //TODO: realize this
         }
     }
 }

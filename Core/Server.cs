@@ -55,6 +55,7 @@ namespace Server.Core {
                 Connection connection = new Connection(tcpClient);
             }
 
+            listener.Stop();
             //TODO: Save DAO
         }
     }

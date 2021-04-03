@@ -7,6 +7,7 @@ namespace Server.DAO {
     interface IChatDAO {
         bool AddChat (Chat chat);
         bool RemoveChat (Chat chat);
-        ICollection<Chat> GetChats ();
+
+        ICollection<Chat> chats { get; }
     }
 }

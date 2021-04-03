@@ -25,11 +25,6 @@ namespace Server.Model {
                     _users = new List<User>();
                 return new List<User>(_users);
             }
-            set {
-                if (_users == null)
-                    _users = new List<User>();
-                _users.Add(value as User);
-            }
         }
         public ICollection<Message> messages {
             get {
@@ -37,12 +32,20 @@ namespace Server.Model {
                     _messages = new List<Message>();
                 return new List<Message>(_messages);
             }
-            set {
-                if (_messages == null)
-                    _messages = new List<Message>();
-                _messages.Add(value as Message);
-            }
         }
         #endregion
+
+        public void AddUser(User user) {
+            if (_users == null)
+                _users = new List<User>();
+            _users.Add(user);
+        }
+
+        public void AddMessage(Message message) {
+            if(_messages == null) {
+                _messages = new List<Message>();
+            }
+            _messages.Add(message);
+        }
     }
 }

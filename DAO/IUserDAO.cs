@@ -7,6 +7,6 @@ namespace Server.DAO {
     interface IUserDAO {
         bool AddUser (User user);
         bool RemoveUser (User user);
-        ICollection<User> GetUsers ();
+        ICollection<User> users { get; }
     }
 }

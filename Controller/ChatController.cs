@@ -23,7 +23,7 @@ namespace Server.Controller{
 
         private IChatService iChatService;
 
-        public CharController(){
+        private CharController(){
             iChatService = ChatService.Instance;
         }
 

@@ -27,7 +27,7 @@ namespace Server.Controller {
 
         private IUserService iUserService;
 
-        public UserController() {
+        private UserController() {
             iUserService = UserService.Instance;
         }
 

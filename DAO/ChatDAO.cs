@@ -32,7 +32,7 @@ namespace Server.DAO {
             }
         }
 
-        public ChatDAO () {
+        private ChatDAO () {
             _chats = new List<Chat>();
         }
         public bool AddChat (Chat chat) {

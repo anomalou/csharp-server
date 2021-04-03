@@ -32,7 +32,7 @@ namespace Server.DAO {
             }
         }
 
-        public UserDAO () {
+        private UserDAO () {
             _users = new List<User>();
         }
         public bool AddUser (User user) {

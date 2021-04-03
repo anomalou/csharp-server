@@ -14,6 +14,8 @@ namespace Server.Model {
         private string _password;
         private Status _status;
         private string _token;
+
+        //TODO: добавить сюда массив чатов
         #endregion
 
         #region Params

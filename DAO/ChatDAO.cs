@@ -10,12 +10,15 @@ namespace Server.DAO {
         #region Singleton
 
         private static IChatDAO INSTANCE;
+        private static readonly object padlock = new object();
 
         public static IChatDAO Instance {
             get {
-                if (INSTANCE == null)
-                    INSTANCE = new ChatDAO();
-                return INSTANCE;
+                lock (padlock) {
+                    if (INSTANCE == null)
+                        INSTANCE = new ChatDAO();
+                    return INSTANCE;
+                }
             }
         }
 

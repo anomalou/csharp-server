@@ -12,12 +12,15 @@ namespace Server.Service {
         #region Singleton
 
         private static IChatService INSTANCE;
+        private static readonly object padlock = new object();
 
         public static IChatService Instance {
             get {
-                if (INSTANCE == null)
-                    INSTANCE = new ChatService();
-                return INSTANCE;
+                lock (padlock){
+                    if (INSTANCE == null)
+                        INSTANCE = new ChatService();
+                    return INSTANCE;
+                }
             }
         }
 

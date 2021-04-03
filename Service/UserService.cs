@@ -12,12 +12,15 @@ namespace Server.Service {
         #region Singleton
 
         private static IUserService INSTANCE;
+        private static readonly object padlock = new object();
 
         public static IUserService Instance {
             get {
-                if (INSTANCE == null)
-                    INSTANCE = new UserService();
-                return INSTANCE;
+                lock (padlock) {
+                    if (INSTANCE == null)
+                        INSTANCE = new UserService();
+                    return INSTANCE;
+                }
             }
         }
 

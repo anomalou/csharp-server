@@ -5,7 +5,8 @@ using Server.Model;
 
 namespace Server.Service {
     interface IUserService {
-        bool RegisterUser (User user);
+        bool LoginUser (LoginDTO user);
+        bool RegisterUser (LoginDTO user);
         string GetUserData (User user);
         User GetUserByID (int id);
         ICollection<User> GetOnlineUsers ();

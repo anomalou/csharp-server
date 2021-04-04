@@ -53,6 +53,7 @@ namespace Server.Core {
             while (isRunning) {
                 TcpClient tcpClient = listener.AcceptTcpClient();
                 Connection connection = new Connection(tcpClient);
+                connectionService.AddConnection(connection);
             }
 
             listener.Stop();

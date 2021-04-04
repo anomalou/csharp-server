@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Server.Core {
-    class Server {
+    class ServerEntity {
 
         #region Singleton
 
-        private static Server INSTANCE;
+        private static ServerEntity INSTANCE;
         private static readonly object padlock = new object();
 
-        public static Server Instance {
+        public static ServerEntity Instance {
             get {
                 lock (padlock) {
                     if (INSTANCE == null)
-                        INSTANCE = new Server();
+                        INSTANCE = new ServerEntity();
                     return INSTANCE;
                 }
             }
@@ -38,7 +38,7 @@ namespace Server.Core {
             }
         }
 
-        private Server () {
+        private ServerEntity () {
             connectionService = ConnectionService.Instance;
             isRunning = false;
         }

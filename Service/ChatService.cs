@@ -6,6 +6,8 @@ using Server.Model;
 using Server.DAO;
 using Server.Exceptions;
 
+using Server.Core;
+
 namespace Server.Service {
     class ChatService : IChatService {
 

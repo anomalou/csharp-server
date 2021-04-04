@@ -19,6 +19,10 @@ namespace Server.Model {
         //TODO: добавить сюда массив чатов
         #endregion
 
+        public User () {
+            _chats = new List<Chat>();
+        }
+
         #region Params
         public int id {
             get {
@@ -54,8 +58,6 @@ namespace Server.Model {
         }
         public ICollection<Chat> chats {
             get {
-                if (_chats == null)
-                    _chats = new List<Chat>();
                 return new List<Chat>(_chats);
             }
         }
@@ -70,8 +72,6 @@ namespace Server.Model {
         #endregion
 
         public void AddChat(Chat chat) {
-            if (_chats == null)
-                _chats = new List<Chat>();
             _chats.Add(chat);
         }
     }

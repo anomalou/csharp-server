@@ -32,7 +32,7 @@ namespace Server.Service {
             userDAO = UserDAO.Instance;
         }
         public Status CheckUserStatus (User user) {
-            return user.status;
+            return GetUserByID(user.id).status;
         }
 
         public ICollection<User> GetOfflineUsers () {
@@ -62,15 +62,34 @@ namespace Server.Service {
         }
 
         public string GetUserData (User user) {
-            return user.ToString();
+            return GetUserByID(user.id).ToString();
         }
 
-        public bool RegisterUser (User user) {
+        public bool LoginUser (LoginDTO user, out User outUser) {
             foreach(User u in userDAO.users) {
-                if (u.login == user.login)
-                    return false;
+                if(user.login == u.login && user.password == u.password) {
+                    u.status = Status.Online;
+                    outUser = u;
+                    return true;
+                }
             }
-            userDAO.AddUser(user);
+            outUser = null;
+            return false;
+        }
+
+        public bool RegisterUser (LoginDTO user, out User outUser) {
+            foreach(User u in userDAO.users) {
+                if (u.login == user.login) {
+                    outUser = null;
+                    return false;
+                }
+            }
+            User ur = new User();
+            ur.login = user.login;
+            ur.password = user.password;
+            ur.status = Status.Offline;
+            userDAO.AddUser(ur);
+            outUser = ur;
             return true;
         }
     }

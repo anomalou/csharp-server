@@ -9,8 +9,9 @@ namespace Server.Service {
         Chat CreateChat ();
         void WriteMessage (Chat chat, Message message);
         bool AddUserToChat (Chat chat, User user);
-        bool RemoveUserFromChat (Chat chat, User user);
+        //bool RemoveUserFromChat (Chat chat, User user);
         Chat GetChatByID (int id);
-        Chat GetChatByUser (User user);
+        ICollection<Chat> GetChatsByUser (User user);
+        bool FindUserInChat (User user, Chat chat);
     }
 }

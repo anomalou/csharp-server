@@ -29,17 +29,18 @@ namespace Server.Core {
         public DTO ParseAndExecute (DTO dto) {
             Object returned = null;
             MethodInfo dtoCommand = Type.GetType(dto.type).GetMethod(dto.command);
-            
+            object[] parameters = dto.parameters;
+
             switch (dto.type) {
                 case "ChatController":
-                    returned = dtoCommand.Invoke(CharController.Instance, dto.parameters);
+                    returned = dtoCommand.Invoke(ChatController.Instance, parameters);
                 break;
                 case "UserController":
-                    returned = dtoCommand.Invoke(UserController.Instance, dto.parameters);
+                    returned = dtoCommand.Invoke(UserController.Instance, parameters);
                 break;
             }
 
-            DTO newDTO = new DTO(dto.command, null, returned);
+            DTO newDTO = new DTO(dto.command, null, returned, parameters);
 
             return newDTO;
         }

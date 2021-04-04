@@ -57,8 +57,8 @@ namespace Server.Controller {
         public bool LoginUser (LoginDTO user) {
             return iUserService.LoginUser(user);
         }
-        public bool RegisterUser(LoginDTO user){
-            return iUserService.RegisterUser(user);
+        public bool RegisterUser(LoginDTO user, out User outUser){
+            return iUserService.RegisterUser(user, out outUser);
         }
         
     }

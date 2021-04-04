@@ -53,9 +53,10 @@ namespace Server.DAO {
         }
 
         private void EnumerateAll () {
-            int enumerator = 0;
+            int enumerator = 1;
             foreach(User user in _users) {
-                user.id = enumerator;
+                if(user.id == 0)
+                    user.id = enumerator;
                 enumerator++;
             }
         }

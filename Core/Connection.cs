@@ -25,7 +25,7 @@ namespace Server.Core {
             while (tcpClient.Connected) {
                 DTO dto;
                 List<byte> dtoBytes = new List<byte>();
-                
+         
                 do {
                     byte[] buffer = new byte[1024];
                     int bufferSize = tcpClient.GetStream().Read(buffer, 0, 1024);
@@ -47,7 +47,7 @@ namespace Server.Core {
 
                 DTO newDTO = Parser.Instance.ParseAndExecute(dto);
 
-                using(MemoryStream memoryStream = new MemoryStream()) {
+                using (MemoryStream memoryStream = new MemoryStream()) {
                     DataContractSerializer serializer = new DataContractSerializer(typeof(DTO));
                     serializer.WriteObject(memoryStream, newDTO);
                     memoryStream.Position = 0;

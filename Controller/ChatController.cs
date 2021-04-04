@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace Server.Controller{
 
-    class CharController {
+    class ChatController {
         #region Singleton
 
-        private static CharController INSTANCE;
+        private static ChatController INSTANCE;
         private static readonly object padlock = new object();
 
-        public static CharController Instance {
+        public static ChatController Instance {
             get {
                 lock (padlock){
                     if (INSTANCE == null)
-                        INSTANCE = new CharController();
+                        INSTANCE = new ChatController();
                     return INSTANCE;
                 }
             }
@@ -23,7 +23,7 @@ namespace Server.Controller{
 
         private IChatService iChatService;
 
-        private CharController(){
+        private ChatController(){
             iChatService = ChatService.Instance;
         }
 
@@ -35,16 +35,20 @@ namespace Server.Controller{
             return iChatService.CreateChat();
         }
 
+        public void WriteMessage(Chat chat, Message message) {
+            iChatService.WriteMessage(chat, message);
+        }
+
         public Chat GetChatByID(int id){
             return iChatService.GetChatByID(id);
         }
 
-        public Chat GetChatByUser(User user){
-            return iChatService.GetChatByUser(user);
+        public ICollection<Chat> GetChatByUser(User user){
+            return iChatService.GetChatsByUser(user);
         }
 
-        public bool RemoveUserFromChat(Chat chat, User user){
-            return iChatService.RemoveUserFromChat(chat, user);
-        }
+        //public bool RemoveUserFromChat(Chat chat, User user){
+        //    return iChatService.RemoveUserFromChat(chat, user);
+        //}
     }
 }

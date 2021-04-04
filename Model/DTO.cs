@@ -7,7 +7,9 @@ namespace Server.Model {
     class DTO {
         #region Private variables
         private string _command;
-        private Object _data;
+        private string _type;
+        private object _returnedValue;
+        private object[] _params;
         #endregion
 
         #region Params
@@ -16,11 +18,30 @@ namespace Server.Model {
                 return _command;
             }
         }
-        public Object data {
+        public string type {
             get {
-                return _data;
+                return _type;
+            }
+        }
+
+        public object returnedValue {
+            get {
+                return _returnedValue;
+            }
+        }
+
+        public object[] parameters {
+            get {
+                return _params;
             }
         }
         #endregion
+
+        public DTO (string command, string type, object returnedValue, params object[] param) {
+            _command = command;
+            _type = type;
+            _returnedValue = returnedValue;
+            _params = param;
+        }
     }
 }

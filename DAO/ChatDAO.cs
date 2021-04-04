@@ -53,9 +53,10 @@ namespace Server.DAO {
         }
 
         private void EnumerateAll () {
-            int enumerator = 0;
+            int enumerator = 1;
             foreach(Chat chat in _chats) {
-                chat.id = enumerator;
+                if(chat.id == 0)
+                    chat.id = enumerator;
                 enumerator++;
             }
         }

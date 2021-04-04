@@ -27,15 +27,21 @@ namespace Server.Service {
         #endregion
 
         private IChatDAO chatDAO;
+        private IUserService userService;
 
         public ChatService () {
             chatDAO = ChatDAO.Instance;
+            userService = UserService.Instance;
         }
         public bool AddUserToChat (Chat chat, User user) {
-            if (!chat.users.Contains(user)) {
-                chat.AddUser(user);
+            if (!FindUserInChat(user, chat)) {
+                Chat c = GetChatByID(chat.id);
+                User u = userService.GetUserByID(user.id);
+                c.AddUser(u);
+                u.AddChat(c);
                 return true;
             }
+            
             return false;
         }
 
@@ -46,6 +52,10 @@ namespace Server.Service {
             throw new ChatException();
         }
 
+        public void WriteMessage (Chat chat, Message message) {
+            GetChatByID(chat.id).AddMessage(message);
+        }
+
         public Chat GetChatByID (int id) {
             foreach(Chat chat in chatDAO.chats) {
                 if (chat.id == id)
@@ -54,18 +64,18 @@ namespace Server.Service {
             throw new ChatException();
         }
 
-        public Chat GetChatByUser (User user) {
-            foreach(Chat chat in chatDAO.chats) {
-                if (chat.users.Contains(user))
-                    return chat;
-            }
-            throw new ChatException();
+        public ICollection<Chat> GetChatsByUser (User user) {
+            return new List<Chat>(userService.GetUserByID(user.id).chats);
         }
 
-        public bool RemoveUserFromChat (Chat chat, User user) {
-            if (chat.users.Remove(user))
-                return true;
-            return false;
+        //public bool RemoveUserFromChat (Chat chat, User user) {
+        //    if (chat.users.Remove(user))
+        //        return true;
+        //    return false;
+        //}
+
+        public bool FindUserInChat (User user, Chat chat) {
+            return chat.users.Contains(user);
         }
     }
 }

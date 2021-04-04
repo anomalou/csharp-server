@@ -17,5 +17,5 @@ namespace Server.View {
                 userController.GetUserByID(Console.ReadLine())
             );            
         }
-    }
+    }   
 }

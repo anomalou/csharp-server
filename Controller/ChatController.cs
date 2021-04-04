@@ -35,6 +35,10 @@ namespace Server.Controller{
             return iChatService.CreateChat();
         }
 
+        public void WriteMessage(Chat chat, Message message) {
+            iChatService.WriteMessage(chat, message);
+        }
+
         public Chat GetChatByID(int id){
             return iChatService.GetChatByID(id);
         }

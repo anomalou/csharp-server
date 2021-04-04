@@ -54,7 +54,10 @@ namespace Server.Controller {
             return iUserService.GetUserData(user);
         }
 
-        public bool RegisterUser(User user){
+        public bool LoginUser (LoginDTO user) {
+            return iUserService.LoginUser(user);
+        }
+        public bool RegisterUser(LoginDTO user){
             return iUserService.RegisterUser(user);
         }
         

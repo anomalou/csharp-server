@@ -65,12 +65,26 @@ namespace Server.Service {
             return user.ToString();
         }
 
-        public bool RegisterUser (User user) {
+        public bool LoginUser (LoginDTO user) {
+            foreach(User u in userDAO.users) {
+                if(user.login == u.login) {
+                    u.status = Status.Online;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool RegisterUser (LoginDTO user) {
             foreach(User u in userDAO.users) {
                 if (u.login == user.login)
                     return false;
             }
-            userDAO.AddUser(user);
+            User ur = new User();
+            ur.login = user.login;
+            ur.password = user.password;
+            ur.status = Status.Offline;
+            userDAO.AddUser(ur);
             return true;
         }
     }

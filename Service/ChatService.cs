@@ -46,6 +46,10 @@ namespace Server.Service {
             throw new ChatException();
         }
 
+        public void WriteMessage (Chat chat, Message message) {
+            chat.AddMessage(message);
+        }
+
         public Chat GetChatByID (int id) {
             foreach(Chat chat in chatDAO.chats) {
                 if (chat.id == id)

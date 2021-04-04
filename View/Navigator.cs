@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Server.View {
 
@@ -18,12 +19,15 @@ namespace Server.View {
         }
 
         public void Navigate (int index) {
-            List<MenuItem> menuItems = currentMenu.GetMenuItems();
+            IList<MenuItem> menuItems = currentMenu.GetMenuItems();
+
+
             if(index <= menuItems.Count) {
+                
                 if(menuItems[index - 1].GetAction() == null)
                     currentMenu = menuItems[index - 1].GetNextMenu();
                 else
-                    menuItems[index - 1].DoAction();
+                    menuItems[index - 1].GetAction().Invoke();
         }
         }
 

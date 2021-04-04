@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Server.View {
     class Menu {
         private string name;
-        private List<MenuItem> menuItem;
+        private ICollection<MenuItem> menuItem;
 
 
         public Menu () { 
@@ -20,7 +20,7 @@ namespace Server.View {
             }
         }
 
-        public List<MenuItem> GetMenuItems () {
+        public IList<MenuItem> GetMenuItems () {
             return new List<MenuItem>(menuItem);
         }
 

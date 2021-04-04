@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Server.Core {
+    //TODO: rename to ServerEntity 
     class Server {
 
         #region Singleton
@@ -44,7 +45,7 @@ namespace Server.Core {
         }
 
         public void Run () {
-            isRunning = true;
+            // isRunning = true;
             //TODO: Get network data from property file
 
             listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 1337);

@@ -8,7 +8,7 @@ namespace Server.View {
         public void Run () {
             while (true) {
                 navigator.PrintMenu();
-                navigator.Navigate(1);
+                navigator.Navigate(int.Parse(Console.ReadLine()));
             }
         }
     }

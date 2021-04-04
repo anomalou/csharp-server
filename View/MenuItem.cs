@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace Server.View {
     class MenuItem {
         private string title;
-        private IAction action;
+        private Action action;
         private Menu nextMenu;
 
-        public MenuItem (string title, IAction action, Menu nextMenu) {
+        public MenuItem (string title, Action action, Menu nextMenu) {
             this.title = title;
             this.action = action;
             this.nextMenu = nextMenu;
@@ -16,7 +16,7 @@ namespace Server.View {
                 return title;
         }
 
-        public IAction GetAction () {
+        public Action GetAction () {
             return action;
         }
 
@@ -24,9 +24,6 @@ namespace Server.View {
             return nextMenu;
         }
 
-        public void DoAction () {
-            action.execute();
-        }
 
     }
 }

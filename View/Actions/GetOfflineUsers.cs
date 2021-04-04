@@ -6,7 +6,7 @@ namespace Server.View {
             this.userController = userController;
         }
 
-        public void execute() {
+        public void Execute() {
             //получение офлайн пользователей
             userController.GetOfflineUsers();
         }

@@ -5,12 +5,12 @@ namespace Server.View {
     private CharController charController;
     private UserController userController;
 
-        public AddUserToChat (ServerController serverController, UserController userController) {
+        public AddUserToChat (CharController charController, UserController userController) {
             this.charController = charController;
             this.userController = userController;
         }
 
-        public void execute() {
+        public void Execute() {
             //добавление пользователя в чат;
             charController.AddUserToChat(
                 charController.GetChatByID(Console.ReadLine()), 

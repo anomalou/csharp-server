@@ -6,7 +6,7 @@ namespace Server.View {
             this.userController = userController;
         }
 
-        public void execute() {
+        public void Execute() {
             //получение онлайн пользователей
             userController.GetOnlineUsers();
         }

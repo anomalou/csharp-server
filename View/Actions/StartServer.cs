@@ -6,7 +6,7 @@ namespace Server.View {
             this.serverController = serverController;
         }
 
-        public void execute() {
+        public void Execute() {
             //запуск сервера;
         }
     }

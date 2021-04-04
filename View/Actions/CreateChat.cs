@@ -6,7 +6,7 @@ namespace Server.View {
             this.charController = charController;
         }
 
-        public void execute() {
+        public void Execute() {
             //создание чата
             charController.CreateChat();
         }

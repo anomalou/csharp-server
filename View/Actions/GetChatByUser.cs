@@ -8,7 +8,7 @@ namespace Server.View {
             this.userController = userController;
         }
 
-        public void execute() {
+        public void Execute() {
             //получение чатов пользователя
             charController.GetChatByUser(userController.GetUserByID(Console.ReadLine()));
         }

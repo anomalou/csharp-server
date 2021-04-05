@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 
@@ -24,6 +25,8 @@ namespace Server.Core {
 
         #endregion
 
+
+        public static ManualResetEvent tcpClientConnected = new ManualResetEvent(false);
         private ConnectionService connectionService;
         private bool _isRunning;
 
@@ -39,25 +42,44 @@ namespace Server.Core {
         }
 
         private ServerEntity () {
+            listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 1337);
             connectionService = ConnectionService.Instance;
-            isRunning = false;
+            //isRunning = false;
+        }
+
+        public void Stop () {
+            //isRunning = false;
+            //listener.EndAcceptTcpClient();
+
+            listener.Stop();
+
+            //TODO: Save DAO
         }
 
         public void Run () {
             // isRunning = true;
             //TODO: Get network data from property file
 
-            listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 1337);
-
             listener.Start();
-            while (isRunning) {
-                TcpClient tcpClient = listener.AcceptTcpClient();
-                Connection connection = new Connection(tcpClient);
-                connectionService.AddConnection(connection);
-            }
+            listener.BeginAcceptTcpClient(new AsyncCallback(CreateConnection), listener);
 
-            listener.Stop();
-            //TODO: Save DAO
+            //TcpClient tcpClient = listener.AcceptTcpClient();
+            //Connection connection = new Connection(tcpClient);
+            //connectionService.AddConnection(connection);
+        }
+
+        private void CreateConnection (IAsyncResult asyncResult) {
+            try {
+                TcpListener listener = (TcpListener) asyncResult.AsyncState;
+
+                TcpClient client = listener.EndAcceptTcpClient(asyncResult);
+                Connection connection = new Connection(client);
+                connectionService.AddConnection(connection);
+
+                listener.BeginAcceptTcpClient(new AsyncCallback(CreateConnection), listener);
+            }catch(Exception ex) {
+                
+            }
         }
     }
 }

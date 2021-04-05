@@ -74,5 +74,9 @@ namespace Server.Model {
         public void AddChat(Chat chat) {
             _chats.Add(chat);
         }
+
+        public override string ToString () {
+            return $"{_id}|{_login}|{_password}|{_status.ToString()}";
+        }
     }
 }

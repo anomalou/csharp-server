@@ -13,7 +13,7 @@ namespace Server.View {
         }
 
         public void PrintMenu () {
-            Console.Write(currentMenu.Name);
+            Console.WriteLine($"=== {currentMenu.Name} ===");
             foreach(MenuItem menuItem in currentMenu.GetMenuItems())
                 Console.WriteLine(menuItem.GetTitle());
         }

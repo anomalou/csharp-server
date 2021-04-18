@@ -27,7 +27,6 @@ namespace Server.Core {
         }
 
         private void Threading () {
-            //TODO: abort connection if connection lost with timeout
             while (tcpClient.Connected) {
                 try {
                     DTO dto;

@@ -31,9 +31,6 @@ namespace Server.Controller {
             iUserService = UserService.Instance;
         }
 
-
-        //TODO: сделать конструкторы приватными
-
         //public Status checkUserStatus(User user){
         //    return iUserService.CheckUserStatus(user);
         //}

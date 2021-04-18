@@ -46,5 +46,13 @@ namespace Server.Controller {
         public ICollection<ChatCover> GetChatsByUser (UserCover user) {
             return iChatService.GetChatsByUser(user);
         }
+
+        public Message GetLastMessageId (ChatCover chat) {
+            return iChatService.GetLastMessageId(chat);
+        }
+
+        public ICollection<Message> GetLastMessagesFromChat (ChatCover chat, int lastId) {
+            return iChatService.GetLastMessagesFromChat(chat, lastId);
+        }
     }
 }

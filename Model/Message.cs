@@ -7,7 +7,7 @@ namespace Server.Model {
         #region Private variables
         private int _id;
         private DateTime _time;
-        private User _author;
+        private UserCover _author;
         private string _text;
         #endregion
 
@@ -28,7 +28,7 @@ namespace Server.Model {
                 _time = value;
             }
         }
-        public User author {
+        public UserCover author {
             get {
                 return _author;
             }

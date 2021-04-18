@@ -89,6 +89,25 @@ namespace Server.Service {
             return false;
         }
 
+        public Message GetLastMessageId (ChatCover chat) {
+            try {
+                return GetChatByID(chat.id).messages.Last<Message>();
+            }catch (Exception ex) {
+                return null;
+            }
+        }
+
+        public ICollection<Message> GetLastMessagesFromChat (ChatCover chat, int lastId) {
+            List<Message> messages = new List<Message>();
+
+            Chat c = GetChatByID(chat.id);
+            for(int i = lastId; i < c.messages.Count; i++) {
+                messages.Add(c.messages.ToList()[i]);
+            }
+
+            return messages;
+        }
+
         public ChatCover Convert(Chat chat) {
             ChatCover cover = new ChatCover();
             foreach(User user in chat.users) {

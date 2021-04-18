@@ -14,8 +14,6 @@ namespace Server.Model {
         private string _password;
         private Status _status;
         private ICollection<Chat> _chats;
-
-        //TODO: добавить сюда массив чатов
         #endregion
 
         public User () {

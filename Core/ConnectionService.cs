@@ -33,8 +33,8 @@ namespace Server.Core {
             connection.Run();
         }
 
-        public void CheckConnection (Connection connection) {
-            //TODO: realize this
+        public void Disconnect () {
+
         }
     }
 }

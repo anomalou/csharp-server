@@ -28,18 +28,8 @@ namespace Server.Core {
 
         public static ManualResetEvent tcpClientConnected = new ManualResetEvent(false);
         private ConnectionService connectionService;
-        private bool _isRunning;
 
         private TcpListener listener;
-
-        public bool isRunning {
-            get {
-                return _isRunning;
-            }
-            set {
-                _isRunning = value;
-            }
-        }
 
         private ServerEntity () {
             listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 1337);
@@ -52,8 +42,6 @@ namespace Server.Core {
             //listener.EndAcceptTcpClient();
 
             listener.Stop();
-
-            //TODO: Save DAO
         }
 
         public void Run () {

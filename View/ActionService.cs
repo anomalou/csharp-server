@@ -1,26 +1,30 @@
+using System;
+using System.Collections.Generic;
 using Server.Controller;
 using Server.Core;
+using Server.Model;
 
 namespace Server.View{
     delegate void Action();
 
     class ActionService{
-//TODO: 
         public static Action runServer = () => {
-            Server.Core.Server.Instance.Run();
+            ServerEntity.Instance.Run();
         };
         public static Action stopServer = () => {
-            Server.Core.Server.Instance.isRunning = false;
+            ServerEntity.Instance.Stop();
         };
 
-        public static Action printUsersList = () => {
-            System.Console.WriteLine("here will be users list");
-            //TODO: get users list 
+        public static Action printOnlineUsersList = () => {
+            foreach(User user in UserController.Instance.GetOnlineUsers()) {
+                Console.WriteLine(user.ToString());
+            }
         };
 
-        public static Action printChats = () => {
-            System.Console.WriteLine("here will be all chat names");
-            //TODO: get chats list
+        public static Action printOfflineUsersList = () => {
+            foreach (User user in UserController.Instance.GetOfflineUsers()) {
+                Console.WriteLine(user.ToString());
+            }
         };
     }
 }

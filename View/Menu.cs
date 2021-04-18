@@ -24,7 +24,7 @@ namespace Server.View {
             return new List<MenuItem>(menuItem);
         }
 
-        public void SetMenuItem (MenuItem menuItem) {
+        public void AddMenuItem (MenuItem menuItem) {
             this.menuItem.Add(menuItem);
         }
     }

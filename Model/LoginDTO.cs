@@ -7,6 +7,11 @@ namespace Server.Model {
         private string _login;
         private string _password;
 
+        public LoginDTO(string login, string password) {
+            _login = login;
+            _password = password;
+        }
+
         public string login {
             get {
                 return _login;

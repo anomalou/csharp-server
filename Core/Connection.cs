@@ -58,7 +58,8 @@ namespace Server.Core {
                 tcpClient.GetStream().Write(dtoBytes.ToArray(), 0, dtoBytes.Count);
             }
 
-            thread.Abort();
+            //TODO: begin use canselation token
+            thread.Interrupt();
         }
     }
 }

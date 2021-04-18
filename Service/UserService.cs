@@ -53,23 +53,30 @@ namespace Server.Service {
             return users;
         }
 
-        public User GetUserByID (int id) {
+        public string GetUserData (User user) {
+            return GetUserByID(user.id).ToString();
+        }
+
+        public ICollection<UserCover> GetUsers () {
+            List<UserCover> covers = new List<UserCover>();
             foreach(User user in userDAO.users) {
+                covers.Add(Convert(user));
+            }
+            return covers;
+        }
+
+        public User GetUserByID (int id) {
+            foreach (User user in userDAO.users) {
                 if (user.id == id)
                     return user;
             }
             throw new UserException();
         }
 
-        public string GetUserData (User user) {
-            return GetUserByID(user.id).ToString();
-        }
-
-        public bool LoginUser (LoginDTO user, out User outUser) {
+        public bool LoginUser (CurrentUser user, out CurrentUser outUser) {
             foreach(User u in userDAO.users) {
                 if(user.login == u.login && user.password == u.password) {
-                    u.status = Status.Online;
-                    outUser = u;
+                    outUser = ConvertToCurrentUser(u);
                     return true;
                 }
             }
@@ -77,20 +84,32 @@ namespace Server.Service {
             return false;
         }
 
-        public bool RegisterUser (LoginDTO user, out User outUser) {
+        public bool RegisterUser (CurrentUser user) {
             foreach(User u in userDAO.users) {
                 if (u.login == user.login) {
-                    outUser = null;
                     return false;
                 }
             }
             User ur = new User();
             ur.login = user.login;
             ur.password = user.password;
-            ur.status = Status.Offline;
             userDAO.AddUser(ur);
-            outUser = ur;
             return true;
+        }
+
+        public UserCover Convert(User user) {
+            UserCover cover = new UserCover();
+            cover.id = user.id;
+            cover.login = user.login;
+            return cover;
+        }
+
+        public CurrentUser ConvertToCurrentUser (User user) {
+            CurrentUser currentUser = new CurrentUser();
+            currentUser.id = user.id;
+            currentUser.login = user.login;
+            currentUser.password = user.password;
+            return currentUser;
         }
     }
 }

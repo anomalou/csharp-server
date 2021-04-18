@@ -7,6 +7,7 @@ using Server.DAO;
 using Server.Exceptions;
 
 using Server.Core;
+using System.Linq;
 
 namespace Server.Service {
     class ChatService : IChatService {
@@ -35,7 +36,7 @@ namespace Server.Service {
             chatDAO = ChatDAO.Instance;
             userService = UserService.Instance;
         }
-        public bool AddUserToChat (Chat chat, User user) {
+        public bool AddUserToChat (ChatCover chat, UserCover user) {
             if (!FindUserInChat(user, chat)) {
                 Chat c = GetChatByID(chat.id);
                 User u = userService.GetUserByID(user.id);
@@ -47,14 +48,14 @@ namespace Server.Service {
             return false;
         }
 
-        public Chat CreateChat () {
+        public ChatCover CreateChat () {
             Chat chat = new Chat();
             if (chatDAO.AddChat(chat))
-                return chat;
+                return Convert(chat);
             throw new ChatException();
         }
 
-        public void WriteMessage (Chat chat, Message message) {
+        public void WriteMessage (ChatCover chat, Message message) {
             GetChatByID(chat.id).AddMessage(message);
         }
 
@@ -66,8 +67,12 @@ namespace Server.Service {
             throw new ChatException();
         }
 
-        public ICollection<Chat> GetChatsByUser (User user) {
-            return new List<Chat>(userService.GetUserByID(user.id).chats);
+        public ICollection<ChatCover> GetChatsByUser (UserCover user) {
+            List<ChatCover> covers = new List<ChatCover>();
+            foreach(Chat chat in userService.GetUserByID(user.id).chats) {
+                covers.Add(Convert(chat));
+            }
+            return covers;
         }
 
         //public bool RemoveUserFromChat (Chat chat, User user) {
@@ -76,8 +81,22 @@ namespace Server.Service {
         //    return false;
         //}
 
-        public bool FindUserInChat (User user, Chat chat) {
-            return chat.users.Contains(user);
+        public bool FindUserInChat (UserCover user, ChatCover chat) {
+            foreach(UserCover userCover in chat.users) {
+                if (userCover.id == user.id)
+                    return true;
+            }
+            return false;
+        }
+
+        public ChatCover Convert(Chat chat) {
+            ChatCover cover = new ChatCover();
+            foreach(User user in chat.users) {
+                cover.AddUser(userService.Convert(user));
+            }
+            cover.AddMessages(chat.messages.ToArray());
+            cover.id = chat.id;
+            return cover;
         }
     }
 }

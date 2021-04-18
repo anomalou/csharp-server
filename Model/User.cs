@@ -14,7 +14,6 @@ namespace Server.Model {
         private string _password;
         private Status _status;
         private ICollection<Chat> _chats;
-        private string _token;
 
         //TODO: добавить сюда массив чатов
         #endregion
@@ -61,14 +60,6 @@ namespace Server.Model {
                 return new List<Chat>(_chats);
             }
         }
-        public string token {
-            get {
-                return _token;
-            }
-            set {
-                _token = value;
-            }
-        } 
         #endregion
 
         public void AddChat(Chat chat) {

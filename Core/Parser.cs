@@ -38,6 +38,9 @@ namespace Server.Core {
                 case "UserController":
                     returned = dtoCommand.Invoke(UserController.Instance, parameters);
                 break;
+                case "Disconnect":
+
+                break;
             }
 
             DTO newDTO = new DTO(dto.command, null, returned, parameters);

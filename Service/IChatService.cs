@@ -6,12 +6,13 @@ using Server.Model;
 
 namespace Server.Service {
     interface IChatService {
-        Chat CreateChat ();
-        void WriteMessage (Chat chat, Message message);
-        bool AddUserToChat (Chat chat, User user);
+        ChatCover CreateChat ();
+        void WriteMessage (ChatCover chat, Message message);
+        bool AddUserToChat (ChatCover chat, UserCover user);
         //bool RemoveUserFromChat (Chat chat, User user);
         Chat GetChatByID (int id);
-        ICollection<Chat> GetChatsByUser (User user);
-        bool FindUserInChat (User user, Chat chat);
+        ICollection<ChatCover> GetChatsByUser (UserCover user);
+        bool FindUserInChat (UserCover user, ChatCover chat);
+        ChatCover Convert (Chat chat);
     }
 }

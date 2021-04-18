@@ -37,8 +37,8 @@ namespace Server.DAO {
         }
         public bool AddUser (User user) {
             if (!_users.Contains(user)) {
+                user.id = _users.Count;
                 _users.Add(user);
-                EnumerateAll();
                 return true;
             }
             return false;
@@ -46,19 +46,9 @@ namespace Server.DAO {
 
         public bool RemoveUser (User user) {
             if (_users.Remove(user)) {
-                EnumerateAll();
                 return true;
             }
             return false;
-        }
-
-        private void EnumerateAll () {
-            int enumerator = 1;
-            foreach(User user in _users) {
-                if(user.id == 0)
-                    user.id = enumerator;
-                enumerator++;
-            }
         }
     }
 }

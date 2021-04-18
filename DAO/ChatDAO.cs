@@ -37,8 +37,8 @@ namespace Server.DAO {
         }
         public bool AddChat (Chat chat) {
             if (!_chats.Contains(chat)) {
+                chat.id = _chats.Count;
                 _chats.Add(chat);
-                EnumerateAll();
                 return true;
             }
             return false;
@@ -46,19 +46,9 @@ namespace Server.DAO {
 
         public bool RemoveChat (Chat chat) {
             if (_chats.Remove(chat)) {
-                EnumerateAll();
                 return true;
             }
             return false;
-        }
-
-        private void EnumerateAll () {
-            int enumerator = 1;
-            foreach(Chat chat in _chats) {
-                if(chat.id == 0)
-                    chat.id = enumerator;
-                enumerator++;
-            }
         }
     }
 }

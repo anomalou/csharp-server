@@ -35,16 +35,17 @@ namespace Server.Model {
         }
         #endregion
 
+        public Chat () {
+            _messages = new List<Message>();
+            _users = new List<User>();
+        }
+
         public void AddUser(User user) {
-            if (_users == null)
-                _users = new List<User>();
             _users.Add(user);
         }
 
         public void AddMessage(Message message) {
-            if(_messages == null) {
-                _messages = new List<Message>();
-            }
+            message.id = _messages.Count;
             _messages.Add(message);
         }
     }

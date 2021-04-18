@@ -2,7 +2,7 @@ using Server.Service;
 using Server.Model;
 using System.Collections.Generic;
 
-namespace Server.Controller{
+namespace Server.Controller {
 
     class ChatController {
         #region Singleton
@@ -12,7 +12,7 @@ namespace Server.Controller{
 
         public static ChatController Instance {
             get {
-                lock (padlock){
+                lock (padlock) {
                     if (INSTANCE == null)
                         INSTANCE = new ChatController();
                     return INSTANCE;
@@ -23,32 +23,28 @@ namespace Server.Controller{
 
         private IChatService iChatService;
 
-        private ChatController(){
+        private ChatController () {
             iChatService = ChatService.Instance;
         }
 
-        public bool AddUserToChat(Chat chat, User user){
+        public bool AddUserToChat (ChatCover chat, UserCover user) {
             return iChatService.AddUserToChat(chat, user);
         }
 
-        public Chat CreateChat(){
+        public ChatCover CreateChat () {
             return iChatService.CreateChat();
         }
 
-        public void WriteMessage(Chat chat, Message message) {
+        public void WriteMessage (ChatCover chat, Message message) {
             iChatService.WriteMessage(chat, message);
         }
 
-        public Chat GetChatByID(int id){
-            return iChatService.GetChatByID(id);
-        }
+        //public Chat GetChatByID(int id){
+        //    return iChatService.GetChatByID(id);
+        //}
 
-        public ICollection<Chat> GetChatByUser(User user){
+        public ICollection<ChatCover> GetChatsByUser (UserCover user) {
             return iChatService.GetChatsByUser(user);
         }
-
-        //public bool RemoveUserFromChat(Chat chat, User user){
-        //    return iChatService.RemoveUserFromChat(chat, user);
-        //}
     }
 }

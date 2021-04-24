@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Runtime.Serialization;
 
 using Server.Model;
@@ -19,6 +20,7 @@ namespace Server.Core {
         public void Run () {
             thread = new Thread(new ThreadStart(Threading));
             thread.Start();
+            Logger.Instance.AddMessage($"User connected with ip: {((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address.ToString()}");
         }
 
         public void Stop () {
@@ -66,6 +68,7 @@ namespace Server.Core {
 
                 }
             }
+            Logger.Instance.AddMessage($"User disconnected with ip: {((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address.ToString()}");
         }
     }
 }

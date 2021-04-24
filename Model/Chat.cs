@@ -45,7 +45,6 @@ namespace Server.Model {
         }
 
         public void AddMessage(Message message) {
-            message.id = _messages.Count;
             _messages.Add(message);
         }
     }

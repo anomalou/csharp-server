@@ -61,7 +61,5 @@ namespace Server.Controller {
         public bool RegisterUser(CurrentUser user){
             return iUserService.RegisterUser(user);
         }
-        
     }
-
 }

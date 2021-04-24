@@ -14,8 +14,12 @@ namespace Server.View {
 
         public void PrintMenu () {
             Console.WriteLine($"=== {currentMenu.Name} ===");
-            foreach(MenuItem menuItem in currentMenu.GetMenuItems())
-                Console.WriteLine(menuItem.GetTitle());
+            int i = 1;
+            
+            foreach(MenuItem menuItem in currentMenu.GetMenuItems()) {
+                Console.WriteLine(i + ". " + menuItem.GetTitle());
+                i++;
+            }
         }
 
         public void Navigate (int index) {

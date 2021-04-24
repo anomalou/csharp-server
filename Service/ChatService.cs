@@ -42,21 +42,28 @@ namespace Server.Service {
                 User u = userService.GetUserByID(user.id);
                 c.AddUser(u);
                 u.AddChat(c);
+                Logger.Instance.AddMessage($"User ({user.id}) added to chat ({chat.id})");
                 return true;
             }
-            
+            Logger.Instance.AddMessage($"Failed adding user ({user.id}) added to chat ({chat.id})");
             return false;
         }
 
         public ChatCover CreateChat () {
             Chat chat = new Chat();
-            if (chatDAO.AddChat(chat))
+            if (chatDAO.AddChat(chat)) {
+                chat.id = chatDAO.chats.Count;
+                Logger.Instance.AddMessage($"Chat ({chat.id}) created");
                 return Convert(chat);
+            }
+            Logger.Instance.AddMessage("Failed adding chat");
             throw new ChatException();
         }
 
         public void WriteMessage (ChatCover chat, Message message) {
+            message.id = GetChatByID(chat.id).messages.Count;
             GetChatByID(chat.id).AddMessage(message);
+            Logger.Instance.AddMessage($"Message ({message.id}) added in chat ({chat.id})");
         }
 
         public Chat GetChatByID (int id) {
@@ -72,6 +79,7 @@ namespace Server.Service {
             foreach(Chat chat in userService.GetUserByID(user.id).chats) {
                 covers.Add(Convert(chat));
             }
+            Logger.Instance.AddMessage($"User ({user.id}) got his chats");
             return covers;
         }
 
@@ -104,7 +112,8 @@ namespace Server.Service {
             for(int i = lastId; i < c.messages.Count; i++) {
                 messages.Add(c.messages.ToList()[i]);
             }
-
+            
+            Logger.Instance.AddMessage($"User updates his chat ({chat.id})");
             return messages;
         }
 

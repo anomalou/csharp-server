@@ -42,6 +42,8 @@ namespace Server.Core {
             //listener.EndAcceptTcpClient();
 
             listener.Stop();
+            
+            Logger.Instance.AddMessage("Server stopped");
         }
 
         public void Run () {
@@ -50,6 +52,8 @@ namespace Server.Core {
 
             listener.Start();
             listener.BeginAcceptTcpClient(new AsyncCallback(CreateConnection), listener);
+            
+            Logger.Instance.AddMessage("Server started");
 
             //TcpClient tcpClient = listener.AcceptTcpClient();
             //Connection connection = new Connection(tcpClient);

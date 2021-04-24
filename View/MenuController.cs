@@ -13,7 +13,10 @@ namespace Server.View {
         public void Run () {
             while (true) {
                 navigator.PrintMenu();
-                navigator.Navigate(int.Parse(Console.ReadLine()));
+                int input = int.Parse(Console.ReadLine());
+                if(input == 0)
+                    break;
+                navigator.Navigate(input);
             }
         }
     }

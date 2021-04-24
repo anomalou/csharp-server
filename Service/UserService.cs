@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using Server.Core;
 using Server.Model;
 using Server.DAO;
 using Server.Exceptions;
@@ -62,6 +62,7 @@ namespace Server.Service {
             foreach(User user in userDAO.users) {
                 covers.Add(Convert(user));
             }
+            Logger.Instance.AddMessage($"User get list of all users");
             return covers;
         }
 
@@ -77,9 +78,11 @@ namespace Server.Service {
             foreach(User u in userDAO.users) {
                 if(user.login == u.login && user.password == u.password) {
                     outUser = ConvertToCurrentUser(u);
+                    Logger.Instance.AddMessage($"User ({user.id}|{user.login}) successfully logged");
                     return true;
                 }
             }
+            Logger.Instance.AddMessage($"User ({user.id}|{user.login}) failed to login");
             outUser = null;
             return false;
         }
@@ -87,6 +90,7 @@ namespace Server.Service {
         public bool RegisterUser (CurrentUser user) {
             foreach(User u in userDAO.users) {
                 if (u.login == user.login) {
+                    Logger.Instance.AddMessage($"Registration failed for user ({user.id}|{user.login})");
                     return false;
                 }
             }
@@ -94,6 +98,7 @@ namespace Server.Service {
             ur.login = user.login;
             ur.password = user.password;
             userDAO.AddUser(ur);
+            Logger.Instance.AddMessage($"Registration successfully for user ({user.id}|{user.login})");
             return true;
         }
 

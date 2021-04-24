@@ -37,7 +37,6 @@ namespace Server.DAO {
         }
         public bool AddChat (Chat chat) {
             if (!_chats.Contains(chat)) {
-                chat.id = _chats.Count;
                 _chats.Add(chat);
                 return true;
             }

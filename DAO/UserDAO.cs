@@ -37,7 +37,6 @@ namespace Server.DAO {
         }
         public bool AddUser (User user) {
             if (!_users.Contains(user)) {
-                user.id = _users.Count;
                 _users.Add(user);
                 return true;
             }

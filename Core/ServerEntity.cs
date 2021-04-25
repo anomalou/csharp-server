@@ -31,29 +31,38 @@ namespace Server.Core {
 
         private TcpListener listener;
 
+        private bool isRunning;
+
         private ServerEntity () {
             listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 1337);
             connectionService = ConnectionService.Instance;
-            //isRunning = false;
+            isRunning = false;
         }
 
         public void Stop () {
             //isRunning = false;
             //listener.EndAcceptTcpClient();
-
+            if (!isRunning) return;
+            
             listener.Stop();
             
             Logger.Instance.AddMessage("Server stopped");
+
+            isRunning = false;
         }
 
         public void Run () {
             // isRunning = true;
             //TODO: Get network data from property file
 
+            if (isRunning) return;
+            
             listener.Start();
             listener.BeginAcceptTcpClient(new AsyncCallback(CreateConnection), listener);
-            
+
             Logger.Instance.AddMessage("Server started");
+
+            isRunning = true;
 
             //TcpClient tcpClient = listener.AcceptTcpClient();
             //Connection connection = new Connection(tcpClient);
@@ -69,8 +78,9 @@ namespace Server.Core {
                 connectionService.AddConnection(connection);
 
                 listener.BeginAcceptTcpClient(new AsyncCallback(CreateConnection), listener);
-            }catch(Exception ex) {
-                
+            }
+            catch (Exception ex) {
+                // ignored
             }
         }
     }

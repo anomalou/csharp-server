@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Server.Model;
+using F10Libs.Networkdata;
 
 namespace Server.Service {
     interface IUserService {
@@ -9,7 +8,7 @@ namespace Server.Service {
         bool RegisterUser (CurrentUser user);
         ICollection<UserCover> GetUsers ();
         //string GetUserData (User user);
-        User GetUserByID (int id);
+        User GetUserByID(int id);
         //ICollection<User> GetOnlineUsers ();
         //ICollection<User> GetOfflineUsers ();
         //Status CheckUserStatus (User user);

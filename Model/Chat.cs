@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using F10Libs.Networkdata;
 
 namespace Server.Model {
     class Chat {

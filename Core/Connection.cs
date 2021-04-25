@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
-
+using System.Runtime.Serialization.Formatters.Binary;
+// using client.Model;
 using Server.Model;
+using F10Libs.Networkdata;
 
 namespace Server.Core {
     class Connection {
@@ -33,6 +35,10 @@ namespace Server.Core {
                 try {
                     DTO dto;
                     List<byte> dtoBytes = new List<byte>();
+                    MemoryStream streamOut = new MemoryStream();
+                    MemoryStream streamIn = new MemoryStream();
+
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
 
                     do {
                         byte[] buffer = new byte[1024];
@@ -46,24 +52,36 @@ namespace Server.Core {
                         dtoBytes.AddRange(buffer);
                     } while (tcpClient.GetStream().DataAvailable);
 
-                    using (MemoryStream memoryStream = new MemoryStream()) {
-                        memoryStream.Write(dtoBytes.ToArray());
-                        memoryStream.Position = 0;
-                        DataContractSerializer deserializer = new DataContractSerializer(typeof(DTO));
-                        dto = deserializer.ReadObject(memoryStream) as DTO;
-                    }
+                    streamOut.Write(dtoBytes.ToArray(), 0, dtoBytes.Count);
+
+                    streamOut.Seek(0, SeekOrigin.Begin);
+
+                    dto = binaryFormatter.Deserialize(streamOut) as DTO;
+
+                    // using (MemoryStream memoryStream = new MemoryStream()) {
+                    //     memoryStream.Write(dtoBytes.ToArray());
+                    //     memoryStream.Position = 0;
+                    //     DataContractSerializer deserializer = new DataContractSerializer(typeof(DTO));
+                    //     dto = deserializer.ReadObject(memoryStream) as DTO;
+                    // }
 
                     DTO newDTO = Parser.Instance.ParseAndExecute(dto);
 
-                    using (MemoryStream memoryStream = new MemoryStream()) {
-                        DataContractSerializer serializer = new DataContractSerializer(typeof(DTO));
-                        serializer.WriteObject(memoryStream, newDTO);
-                        memoryStream.Position = 0;
-                        dtoBytes.Clear();
-                        dtoBytes.AddRange(memoryStream.ToArray());
-                    }
+                    // using (MemoryStream memoryStream = new MemoryStream()) {
+                    //     DataContractSerializer serializer = new DataContractSerializer(typeof(DTO));
+                    //     serializer.WriteObject(memoryStream, newDTO);
+                    //     memoryStream.Position = 0;
+                    //     dtoBytes.Clear();
+                    //     dtoBytes.AddRange(memoryStream.ToArray());
+                    // }
+                    
+                    // stream.SetLength(0);
+                    
+                    binaryFormatter.Serialize(streamIn, newDTO);
+                    
+                    tcpClient.GetStream().Write(streamIn.ToArray());
 
-                    tcpClient.GetStream().Write(dtoBytes.ToArray(), 0, dtoBytes.Count);
+                    // tcpClient.GetStream().Write(dtoBytes.ToArray(), 0, dtoBytes.Count);
                 }catch (Exception ex) {
 
                 }

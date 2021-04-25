@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-
+// using client.Model;
 using Server.Model;
+using F10Libs.Networkdata;
 using Server.Controller;
 
 namespace Server.Core {
@@ -28,7 +30,13 @@ namespace Server.Core {
 
         public DTO ParseAndExecute (DTO dto) {
             Object returned = null;
-            MethodInfo dtoCommand = Type.GetType(dto.type).GetMethod(dto.command);
+            Type controllerType;
+            if ((controllerType = GetControllerType(dto.type)) == null) {
+                //TODO do if failed
+                return null;
+            }
+
+            MethodInfo dtoCommand = controllerType.GetMethod(dto.command);
             object[] parameters = dto.parameters;
 
             switch (dto.type) {
@@ -46,6 +54,17 @@ namespace Server.Core {
             DTO newDTO = new DTO(dto.command, null, returned, parameters);
 
             return newDTO;
+        }
+
+        private Type GetControllerType(string type) {
+            switch (type) {
+                case "ChatController":
+                    return typeof(ChatController);
+                case "UserController":
+                    return typeof(UserController);
+            }
+
+            return null;
         }
     }
 }

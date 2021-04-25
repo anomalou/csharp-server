@@ -6,4 +6,10 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="F10Libs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\chat-client\client\Libraries\F10Libs.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

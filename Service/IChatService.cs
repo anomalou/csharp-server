@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Security;
 using System.Text;
-
+// using client.Model;
 using Server.Model;
+using F10Libs.Networkdata;
 
 namespace Server.Service {
     interface IChatService {

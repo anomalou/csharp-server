@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Server.Core;
-using Server.Model;
 using Server.DAO;
 using Server.Exceptions;
+using F10Libs.Networkdata;
+using Server.Model;
 
 namespace Server.Service {
     class UserService : IUserService {
@@ -66,7 +67,7 @@ namespace Server.Service {
             return covers;
         }
 
-        public User GetUserByID (int id) {
+        public User GetUserByID(int id) {
             foreach (User user in userDAO.users) {
                 if (user.id == id)
                     return user;
@@ -76,29 +77,29 @@ namespace Server.Service {
 
         public bool LoginUser (CurrentUser user, out CurrentUser outUser) {
             foreach(User u in userDAO.users) {
-                if(user.login == u.login && user.password == u.password) {
+                if(user.Login == u.login && user.HashedPassword == u.password) {
                     outUser = ConvertToCurrentUser(u);
-                    Logger.Instance.AddMessage($"User ({user.id}|{user.login}) successfully logged");
+                    Logger.Instance.AddMessage($"User ({user.Id}|{user.Login}) successfully logged");
                     return true;
                 }
             }
-            Logger.Instance.AddMessage($"User ({user.id}|{user.login}) failed to login");
+            Logger.Instance.AddMessage($"User ({user.Id}|{user.Login}) failed to login");
             outUser = null;
             return false;
         }
 
         public bool RegisterUser (CurrentUser user) {
             foreach(User u in userDAO.users) {
-                if (u.login == user.login) {
-                    Logger.Instance.AddMessage($"Registration failed for user ({user.id}|{user.login})");
+                if (u.login == user.Login) {
+                    Logger.Instance.AddMessage($"Registration failed for user ({user.Login})");
                     return false;
                 }
             }
             User ur = new User();
-            ur.login = user.login;
-            ur.password = user.password;
+            ur.login = user.Login;
+            ur.password = user.HashedPassword;
             userDAO.AddUser(ur);
-            Logger.Instance.AddMessage($"Registration successfully for user ({user.id}|{user.login})");
+            Logger.Instance.AddMessage($"Registration successfully for user ({ur.id}|{user.Login})");
             return true;
         }
 
@@ -110,10 +111,7 @@ namespace Server.Service {
         }
 
         public CurrentUser ConvertToCurrentUser (User user) {
-            CurrentUser currentUser = new CurrentUser();
-            currentUser.id = user.id;
-            currentUser.login = user.login;
-            currentUser.password = user.password;
+            CurrentUser currentUser = new CurrentUser(user.id, user.login, user.password);
             return currentUser;
         }
     }

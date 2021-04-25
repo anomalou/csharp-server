@@ -8,6 +8,7 @@ using Server.Exceptions;
 
 using Server.Core;
 using System.Linq;
+using F10Libs.Networkdata;
 
 namespace Server.Service {
     class ChatService : IChatService {

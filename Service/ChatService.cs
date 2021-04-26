@@ -80,7 +80,7 @@ namespace Server.Service {
             foreach(Chat chat in userService.GetUserByID(user.id).chats) {
                 covers.Add(Convert(chat));
             }
-            Logger.Instance.AddMessage($"User ({user.id}) got his chats");
+            Logger.Instance.AddMessage($"User ({user.id}|{user.login}) got his chats");
             return covers;
         }
 
